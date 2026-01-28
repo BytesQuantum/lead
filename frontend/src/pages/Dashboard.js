@@ -13,7 +13,7 @@ import './Dashboard.css';
  * Dashboard Component
  * Main page for lead management
  */
-const Dashboard = () => {
+const Dashboard = ({ onLogout }) => {
   const [leads, setLeads] = useState([]);
   const [filteredLeads, setFilteredLeads] = useState([]);
   const [stats, setStats] = useState({ total: 0, byStatus: [] });
@@ -199,6 +199,11 @@ const Dashboard = () => {
             <button className="btn-add" onClick={() => setShowAddModal(true)}>
               + Add New Lead
             </button>
+            {onLogout && (
+              <button className="btn-logout" onClick={onLogout}>
+                Logout
+              </button>
+            )}
           </div>
         </div>
       </header>
