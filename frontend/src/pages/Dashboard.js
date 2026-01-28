@@ -196,7 +196,6 @@ const Dashboard = () => {
             <p className="header-quote">"You never know which door will open, so keep knocking"</p>
           </div>
           <div className="header-actions">
-            <button className="btn-logout">Logout</button>
             <button className="btn-add" onClick={() => setShowAddModal(true)}>
               + Add New Lead
             </button>

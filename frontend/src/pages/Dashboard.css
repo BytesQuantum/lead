@@ -61,23 +61,6 @@
   align-items: center;
 }
 
-.btn-logout {
-  background: transparent;
-  color: #666;
-  border: 1px solid #d5d5d5;
-  padding: 0.5rem 1.25rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 400;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-logout:hover {
-  background: #f5f5f5;
-  border-color: #999;
-}
-
 .btn-add {
   background: #E07856;
   color: white;
@@ -146,9 +129,8 @@
     width: 100%;
   }
 
-  .btn-logout,
   .btn-add {
-    flex: 1;
+    width: 100%;
   }
 
   .dashboard-main {
