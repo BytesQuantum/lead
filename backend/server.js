@@ -21,6 +21,7 @@ const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps, curl, Postman)
     if (!origin) return callback(null, true);
+    // Allow all Vercel deployments and configured origins
     if (allowedOrigins.indexOf(origin) !== -1 || /\.vercel\.app$/.test(origin)) {
       callback(null, true);
     } else {
@@ -30,7 +31,7 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'X-CSRF-Token', 'X-Api-Version']
 };
 
 // Middleware
