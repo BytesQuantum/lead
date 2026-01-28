@@ -1,5 +1,4 @@
 const Lead = require('../models/Lead');
-const { validationResult } = require('express-validator');
 
 /**
  * @desc    Create a new lead
@@ -8,16 +7,6 @@ const { validationResult } = require('express-validator');
  */
 const createLead = async (req, res) => {
   try {
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation failed',
-        errors: errors.array(),
-      });
-    }
-
     const { 
       fullName, 
       phoneNumber, 
@@ -29,14 +18,14 @@ const createLead = async (req, res) => {
       status 
     } = req.body;
 
-    // Create new lead
+    // Create new lead - NO VALIDATION
     const lead = await Lead.create({
-      fullName,
+      fullName: fullName || '',
       phoneNumber: phoneNumber || '',
       email: email || '',
       linkedinProfile: linkedinProfile || '',
-      projectType,
-      requirement,
+      projectType: projectType || 'App',
+      requirement: requirement || '',
       notes: notes || '',
       status: status || 'New',
     });
@@ -48,23 +37,6 @@ const createLead = async (req, res) => {
     });
   } catch (error) {
     console.error('Create Lead Error:', error);
-    
-    // Handle duplicate email error
-    if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: 'A lead with this email already exists',
-      });
-    }
-    
-    // Handle validation errors
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation failed',
-        error: error.message,
-      });
-    }
     
     res.status(500).json({
       success: false,
@@ -181,16 +153,6 @@ const getLeadById = async (req, res) => {
  */
 const updateLead = async (req, res) => {
   try {
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation failed',
-        errors: errors.array(),
-      });
-    }
-
     const { 
       fullName, 
       phoneNumber, 
@@ -211,7 +173,7 @@ const updateLead = async (req, res) => {
       });
     }
 
-    // Update lead
+    // Update lead - NO VALIDATION
     lead = await Lead.findByIdAndUpdate(
       req.params.id,
       {
@@ -226,7 +188,7 @@ const updateLead = async (req, res) => {
       },
       {
         new: true, // Return updated document
-        runValidators: true, // Run model validators
+        runValidators: false, // DISABLE validators
       }
     );
 
